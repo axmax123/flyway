@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ProjectDetail;
+import com.example.demo.model.Project;
 import com.example.demo.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -16,46 +16,45 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class ProjectdetailController {
+public class ProjectController {
 
     @Autowired
-    private ProjectService projectService;
+    ProjectService projectService;
 
     // display list of Projects
     @GetMapping("/")
     public String viewHomePage(Model model) {
-    return findPaginated(1,"timeStart","asc",model);
+        return findPaginated(1,"projectName","asc",model);
     }
 
-    @GetMapping("/showNewProjectForm")
+    @GetMapping(value = "/showNewProjectForm")
     public String showNewProjectForm(Model model) {
         // create model attribute to bind form data
-        ProjectDetail projectDetail = new ProjectDetail();
-        model.addAttribute("projectDetail", projectDetail);
+        Project project = new Project();
+        model.addAttribute("project", project);
         return "new_project";
     }
     @PostMapping("/saveProject")
-    public String saveProject(@ModelAttribute("Project") ProjectDetail projectDetail) {
+    public String saveProject(@ModelAttribute("Project") Project project) {
         // save Project to database
-        projectService.saveProject(projectDetail);
+        projectService.saveProject(project);
         return "redirect:/";
     }
 
     @GetMapping("/showFormForUpdate/{id}")
-    public String showFormForUpdate(@PathVariable ( value = "id") long id, Model model) {
+    public String showFormForUpdate(@PathVariable (value = "id") long id, Model model) {
 
         // get Project from the service
-        ProjectDetail projectDetail = projectService.getProjectById(id);
+        Project project = projectService.getProjectById(id);
 
         // set Project as a model attribute to pre-populate the form
-        model.addAttribute("projectDetail", projectDetail);
+        model.addAttribute("project", project);
         return "update_project";
     }
 
     @GetMapping("/deleteProject/{id}")
     public String deleteProject(@PathVariable (value = "id") long id) {
 
-        // call delete Project method
         this.projectService.deleteProjectById(id);
         return "redirect:/";
     }
@@ -67,8 +66,8 @@ public class ProjectdetailController {
                                 @RequestParam(value = "sortDir",required = false) String sortDir,
                                 Model model) {
         int pageSize = 5;
-        Page<ProjectDetail> page = projectService.findPaginated(pageNo, pageSize, sortField, sortDir);
-        List<ProjectDetail> listProjects = page.getContent();
+        Page<Project> page = projectService.findPaginated(pageNo, pageSize, sortField, sortDir);
+        List<Project> listProjects = page.getContent();
 
         model.addAttribute("currentPage", pageNo);
         model.addAttribute("totalPages", page.getTotalPages());

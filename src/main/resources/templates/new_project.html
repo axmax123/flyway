@@ -1,10 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="ISO-8859-1">
+    <title>project Management System</title>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+          crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
+    <h1>project Management System</h1>
+    <hr>
+    <h2>Save project</h2>
 
+    <form action="#" th:action="@{/saveProject}" th:object="${project}"
+          method="POST">
+        <input type="text" th:field="*{projectName}"
+               placeholder="project name" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{timeStart}"
+               placeholder="project time start" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{timeEnd}"
+               placeholder="Project time end" class="form-control mb-4 col-4">
+
+        <input type="text" th:field="*{state}"
+               placeholder="project state" class="form-control mb-4 col-4">
+
+
+        <button type="submit" class="btn btn-info col-2"> Save Employee</button>
+    </form>
+
+    <hr>
+
+    <a th:href = "@{/}"> Back to project List</a>
+</div>
 </body>
 </html>

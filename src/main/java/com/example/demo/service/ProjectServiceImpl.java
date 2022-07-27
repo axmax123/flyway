@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ProjectDetail;
+import com.example.demo.model.Project;
 import com.example.demo.repository.ProjectRepositoty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,25 +17,29 @@ public class ProjectServiceImpl implements ProjectService {
     @Autowired
     private ProjectRepositoty projectRepositoty;
 
+    public ProjectServiceImpl(ProjectRepositoty projectRepositoty) {
+        this.projectRepositoty = projectRepositoty;
+    }
+
     @Override
-    public List<ProjectDetail>getAllProjectdetail() {
+    public List<Project> getAllProject() {
         return projectRepositoty.findAll();
     }
 
     @Override
-    public void saveProject(ProjectDetail projectDetail) {
+    public void saveProject(Project projectDetail) {
 this.projectRepositoty.save(projectDetail);
     }
 
     @Override
-    public ProjectDetail getProjectById(long id) {
-        Optional<ProjectDetail> optional =projectRepositoty.findById(id);
-         ProjectDetail projectDetail =null;
-        if (optional.isPresent()){  projectDetail =optional.get();
+    public Project getProjectById(long id) {
+        Optional<Project> optional =projectRepositoty.findById(id);
+         Project project;
+        if (optional.isPresent()){  project =optional.get();
     }else {
-    throw new RuntimeException("không tìm thấy id" +id);
+    throw new RuntimeException("can not found id" +id);
 
-    }return projectDetail;
+    }return project;
     }
 
     @Override
@@ -44,7 +48,7 @@ this.projectRepositoty.save(projectDetail);
     }
 
     @Override
-    public Page<ProjectDetail> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
+    public Page<Project> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection) {
         Sort sort = sortDirection.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortField).ascending() :
                 Sort.by(sortField).descending();
         Pageable pageable = PageRequest.of(pageNo - 1, pageSize, sort);

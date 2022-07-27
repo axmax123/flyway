@@ -19,8 +19,8 @@
         <thead>
         <tr>
             <th>
-                <a th:href="@{'/page/' + ${currentPage} + '?sortField=status&sortDir=' + ${reverseSortDir}}">
-                    Project status</a>
+                <a th:href="@{'/page/' + ${currentPage} + '?sortField=state&sortDir=' + ${reverseSortDir}}">
+                    Project state</a>
             </th>
             <th>
                 <a th:href="@{'/page/' + ${currentPage} + '?sortField=timeStart&sortDir=' + ${reverseSortDir}}">
@@ -39,13 +39,12 @@
         </thead>
         <tbody>
         <tr th:each="proJect : ${listProjects}">
-            <td th:text="${proJect.status}"></td>
+            <td th:text="${proJect.projectName}"></td>
             <td th:text="${proJect.timeStart}"></td>
             <td th:text="${proJect.timeEnd}"></td>
-            <td th:text="${proJect.technical}"></td>
-
-            <td> <a th:href="@{/showFormForUpdate/{id}(id=${project.id})}" class="btn btn-primary">Update</a>
-                <a th:href="@{/deleteProject/{id}(id=${project.id})}" class="btn btn-danger">Delete</a>
+            <td th:text="${proJect.state}"></td>
+            <td> <a th:href="@{/showFormForUpdate/{id}(id=${proJect.id})}" class="btn btn-primary">Update</a>
+                <a th:href="@{/deleteProject/{id}(id=${proJect.id})}" class="btn btn-danger">Delete</a>
             </td>
         </tr>
         </tbody>

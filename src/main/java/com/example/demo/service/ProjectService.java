@@ -1,14 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.model.ProjectDetail;
+import com.example.demo.model.Project;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 public interface ProjectService {
-    List<ProjectDetail>getAllProjectdetail();
-    void saveProject(ProjectDetail projectDetail);
-    ProjectDetail getProjectById(long id);
+    List<Project> getAllProject();
+    void saveProject(Project project);
+    Project getProjectById(long id);
     void deleteProjectById(long id);
-    Page<ProjectDetail> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
+    Page<Project> findPaginated(int pageNo, int pageSize, String sortField, String sortDirection);
 }
